@@ -1,2 +1,2 @@
 // @tag full-page
-// @require D:\Workspace\studentApp\app.js
+// @require D:\Workspace\TMSApp\app.js

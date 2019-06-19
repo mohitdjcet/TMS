@@ -884,22 +884,22 @@ describe('Ext.grid.feature.Grouping', function () {
 
         function createGrid(gridCfg, groupingCfg, columns, storeCfg) {
             data = [{
-                student: 'Student 1',
+                TMS: 'TMS 1',
                 subject: 'Math',
                 mark: 84,
                 allowance: 15.50
             },{
-                student: 'Student 1',
+                TMS: 'TMS 1',
                 subject: 'Science',
                 mark: 72,
                 allowance: 10.75
             },{
-                student: 'Student 2',
+                TMS: 'TMS 2',
                 subject: 'Math',
                 mark: 96,
                 allowance: 100.75
             },{
-                student: 'Student 2',
+                TMS: 'TMS 2',
                 subject: 'Science',
                 mark: 68,
                 allowance: 1.55
@@ -908,7 +908,7 @@ describe('Ext.grid.feature.Grouping', function () {
             Ext.define('spec.Grouping', {
                 extend: 'Ext.data.Model',
                 fields: [
-                    'student',
+                    'TMS',
                     'subject',
                     {
                         name: 'mark',
@@ -933,13 +933,13 @@ describe('Ext.grid.feature.Grouping', function () {
             }, groupingCfg));
 
             columns = columns || [{
-                itemId: 'studentColumn',
-                dataIndex: 'student',
+                itemId: 'TMSColumn',
+                dataIndex: 'TMS',
                 text: 'Name',
                 summaryType: 'count',
                 summaryRenderer: function (value, summaryData, field) {
                     params = arguments;
-                    return Ext.String.format('{0} student{1}', value, value !== 1 ? 's' : '');
+                    return Ext.String.format('{0} TMS{1}', value, value !== 1 ? 's' : '');
                 }
             }, {
                 itemId: 'markColumn',
@@ -1002,7 +1002,7 @@ describe('Ext.grid.feature.Grouping', function () {
             doGrid(storeCfg);
 
             // Trigger grouping.
-            header = grid.headerCt.down('[dataIndex="' + (groupField || 'student') + '"]');
+            header = grid.headerCt.down('[dataIndex="' + (groupField || 'TMS') + '"]');
 
             if (!dir) {
                 expect(grid.store.isGrouped()).toBe(!!groupField);
@@ -1097,7 +1097,7 @@ describe('Ext.grid.feature.Grouping', function () {
                 });
             }
 
-            doGroupFieldTests('student');
+            doGroupFieldTests('TMS');
             doGroupFieldTests(null);
         });
 
@@ -1107,7 +1107,7 @@ describe('Ext.grid.feature.Grouping', function () {
 
             doGrid();
 
-            header = grid.headerCt.down('[dataIndex="student"]');
+            header = grid.headerCt.down('[dataIndex="TMS"]');
 
             // Trigger the menu.
             jasmine.fireMouseEvent(header.triggerEl.dom, 'click');
@@ -1121,9 +1121,9 @@ describe('Ext.grid.feature.Grouping', function () {
             doGrid();
 
             // Collapse the first group.
-            grouping.collapse('Student 1');
+            grouping.collapse('TMS 1');
 
-            // Get the second row in the Student 2 group.
+            // Get the second row in the TMS 2 group.
             el = view.getRowByRecord(grouping.dataSource.getAt(2)).firstChild;
 
             jasmine.fireMouseEvent(el, 'click');
@@ -1141,7 +1141,7 @@ describe('Ext.grid.feature.Grouping', function () {
 
             doGrid();
 
-            header = grid.headerCt.down('[dataIndex="student"]');
+            header = grid.headerCt.down('[dataIndex="TMS"]');
 
             // Trigger the menu.
             jasmine.fireMouseEvent(header.triggerEl.dom, 'click');

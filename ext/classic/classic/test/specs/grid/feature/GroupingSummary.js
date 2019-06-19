@@ -12,22 +12,22 @@ describe('Ext.grid.feature.GroupingSummary', function () {
 
     function createGrid(gridCfg, groupingSummaryCfg, columns, storeCfg) {
         data = [{
-            student: 'Student 1',
+            TMS: 'TMS 1',
             subject: 'Math',
             mark: 84,
             allowance: 15.50
         },{
-            student: 'Student 1',
+            TMS: 'TMS 1',
             subject: 'Science',
             mark: 72,
             allowance: 10.75
         },{
-            student: 'Student 2',
+            TMS: 'TMS 2',
             subject: 'Math',
             mark: 96,
             allowance: 100.75
         },{
-            student: 'Student 2',
+            TMS: 'TMS 2',
             subject: 'Science',
             mark: 68,
             allowance: 1.55
@@ -36,7 +36,7 @@ describe('Ext.grid.feature.GroupingSummary', function () {
         Ext.define('spec.GroupingSummary', {
             extend: 'Ext.data.Model',
             fields: [
-                'student',
+                'TMS',
                 'subject',
                 {
                     name: 'mark',
@@ -66,13 +66,13 @@ describe('Ext.grid.feature.GroupingSummary', function () {
         }, groupingSummaryCfg));
 
         columns = columns || [{
-            itemId: 'studentColumn',
-            dataIndex: 'student',
+            itemId: 'TMSColumn',
+            dataIndex: 'TMS',
             text: 'Name',
             summaryType: 'count',
             summaryRenderer: function (value, summaryData, field, metaData) {
                 params = arguments;
-                return Ext.String.format('{0} student{1}', value, value !== 1 ? 's' : '');
+                return Ext.String.format('{0} TMS{1}', value, value !== 1 ? 's' : '');
             }
         }, {
             itemId: 'markColumn',
@@ -154,11 +154,11 @@ describe('Ext.grid.feature.GroupingSummary', function () {
             expect(params.length).toBe(4);
             expect(params[0]).toBe(2);
             expect(params[1]).toEqual({
-                studentColumn: 2,
+                TMSColumn: 2,
                 markColumn: 70,
                 noDataIndexColumn: 12.3
             });
-            expect(params[2]).toBe('student');
+            expect(params[2]).toBe('TMS');
             expect(params[3].tdCls).toBeDefined();
         });
 
@@ -167,11 +167,11 @@ describe('Ext.grid.feature.GroupingSummary', function () {
 
             createGrid();
 
-            // The "Student 2" item is a wrapper which also encapsulates the summary row.
-            // It will contain 2 rows: Student 2 and the summary.
+            // The "TMS 2" item is a wrapper which also encapsulates the summary row.
+            // It will contain 2 rows: TMS 2 and the summary.
             node = grid.view.all.item(1, true);
 
-            expect((node.textContent || node.innerText).replace(/\r\n?|\n/g, '')).toBe('Student 296$100.752 students90$116.25');
+            expect((node.textContent || node.innerText).replace(/\r\n?|\n/g, '')).toBe('TMS 296$100.752 TMSs90$116.25');
         });
 
         it('should update when group records are removed', function () {
@@ -183,14 +183,14 @@ describe('Ext.grid.feature.GroupingSummary', function () {
             // Pre-removal.
             expect(mathGroup.markColumn).toBe(90);
             expect(mathGroup.noDataIndexColumn).toBe(116.25);
-            expect(mathGroup.studentColumn).toBe(2);
+            expect(mathGroup.TMSColumn).toBe(2);
 
             store.removeAt(1);
 
             // The summaryData record should be updated.
             expect(mathGroup.markColumn).toBe(84);
             expect(mathGroup.noDataIndexColumn).toBe(15.5);
-            expect(mathGroup.studentColumn).toBe(1);
+            expect(mathGroup.TMSColumn).toBe(1);
         });
     });
 
@@ -263,7 +263,7 @@ describe('Ext.grid.feature.GroupingSummary', function () {
                 var groupInfo = groupingSummary.getMetaGroup(store.getGroups().getAt(0)),
                     record = groupInfo.aggregateRecord;
 
-                expect(record.get('student')).toBe(data.student);
+                expect(record.get('TMS')).toBe(data.TMS);
                 expect(record.get('mark')).toBe(data.mark);
                 expect(record.get('noDataIndexColumn')).toBe(data.noDataIndexColumn);
             });
@@ -286,10 +286,10 @@ describe('Ext.grid.feature.GroupingSummary', function () {
             });
 
             expectIt({
-                student: 2,
+                TMS: 2,
                 mark: 90,
                 noDataIndexColumn: 116.25,
-                view: '2students90$116.25'
+                view: '2TMSs90$116.25'
             });
         });
 
@@ -303,10 +303,10 @@ describe('Ext.grid.feature.GroupingSummary', function () {
 
             describe('adding a filter', function () {
                 expectIt({
-                    student: 1,
+                    TMS: 1,
                     mark: 84,
                     noDataIndexColumn: 15.50,
-                    view: '1student84$15.50'
+                    view: '1TMS84$15.50'
                 });
             });
 
@@ -316,10 +316,10 @@ describe('Ext.grid.feature.GroupingSummary', function () {
                 });
 
                 expectIt({
-                    student: 2,
+                    TMS: 2,
                     mark: 90,
                     noDataIndexColumn: 116.25,
-                    view: '2students90$116.25'
+                    view: '2TMSs90$116.25'
                 });
             });
         });
@@ -336,12 +336,12 @@ describe('Ext.grid.feature.GroupingSummary', function () {
                     model: 'spec.GroupingSummary',
                     groupField: 'subject',
                     data: [{
-                        student: 'Student 1',
+                        TMS: 'TMS 1',
                         subject: 'Math',
                         mark: 84,
                         allowance: 15.50
                     },{
-                        student: 'Student 2',
+                        TMS: 'TMS 2',
                         subject: 'Science',
                         mark: 68,
                         allowance: 1.55
@@ -356,20 +356,20 @@ describe('Ext.grid.feature.GroupingSummary', function () {
                     [84, 15.50]
                 );
 
-                expectSummaryRow('1student84$15.50');
+                expectSummaryRow('1TMS84$15.50');
             });
         });
 
         describe('new columns', function () {
             it('should update the summary row', function () {
                 grid.reconfigure(null, [{
-                    itemId: 'studentColumn',
-                    dataIndex: 'student',
+                    itemId: 'TMSColumn',
+                    dataIndex: 'TMS',
                     text: 'Name',
                     summaryType: 'count',
                     summaryRenderer: function (value, summaryData, field, metaData) {
                         params = arguments;
-                        return Ext.String.format('{0} student{1}', value, value !== 1 ? 's' : '');
+                        return Ext.String.format('{0} TMS{1}', value, value !== 1 ? 's' : '');
                     }
                 }, {
                     itemId: 'allowance',
@@ -379,11 +379,11 @@ describe('Ext.grid.feature.GroupingSummary', function () {
                 }]);
 
                 expectData(
-                    ['student', 'allowance'],
+                    ['TMS', 'allowance'],
                     [2, 58.125]
                 );
 
-                expectSummaryRow('2students58.125');
+                expectSummaryRow('2TMSs58.125');
             });
         });
     });
@@ -413,29 +413,29 @@ describe('Ext.grid.feature.GroupingSummary', function () {
 
             var rows = grid.view.el.query(groupingSummary.summaryRowSelector);
 
-            expect((rows[0].textContent || rows[0].innerText).replace(/\s/g, '')).toBe('2students90$116.25');
-            expect((rows[1].textContent || rows[1].innerText).replace(/\s/g, '')).toBe('2students70$12.30');
+            expect((rows[0].textContent || rows[0].innerText).replace(/\s/g, '')).toBe('2TMSs90$116.25');
+            expect((rows[1].textContent || rows[1].innerText).replace(/\s/g, '')).toBe('2TMSs70$12.30');
 
             store.load();
             Ext.Ajax.mockComplete({
                 status: 200,
                 responseText: Ext.encode([{
-                    student: 'Student 1',
+                    TMS: 'TMS 1',
                     subject: 'Math',
                     mark: 77,
                     allowance: 30
                 }, {
-                    student: 'Student 2',
+                    TMS: 'TMS 2',
                     subject: 'Science',
                     mark: 20,
                     allowance: 30.12
                 }, {
-                    student: 'Student 3',
+                    TMS: 'TMS 3',
                     subject: 'Science',
                     mark: 30,
                     allowance: 12
                 }, {
-                    student: 'Student 4',
+                    TMS: 'TMS 4',
                     subject: 'Science',
                     mark: 40,
                     allowance: 1
@@ -444,8 +444,8 @@ describe('Ext.grid.feature.GroupingSummary', function () {
 
             rows = grid.view.el.query(groupingSummary.summaryRowSelector);
 
-            expect((rows[0].textContent || rows[0].innerText).replace(/\s/g, '')).toBe('1student77$30.00');
-            expect((rows[1].textContent || rows[1].innerText).replace(/\s/g, '')).toBe('3students30$43.12');
+            expect((rows[0].textContent || rows[0].innerText).replace(/\s/g, '')).toBe('1TMS77$30.00');
+            expect((rows[1].textContent || rows[1].innerText).replace(/\s/g, '')).toBe('3TMSs30$43.12');
         });
 
         it("should update the summary when loading local data", function() {
@@ -453,26 +453,26 @@ describe('Ext.grid.feature.GroupingSummary', function () {
 
             var rows = grid.view.el.query(groupingSummary.summaryRowSelector);
 
-            expect((rows[0].textContent || rows[0].innerText).replace(/\s/g, '')).toBe('2students90$116.25');
-            expect((rows[1].textContent || rows[1].innerText).replace(/\s/g, '')).toBe('2students70$12.30');
+            expect((rows[0].textContent || rows[0].innerText).replace(/\s/g, '')).toBe('2TMSs90$116.25');
+            expect((rows[1].textContent || rows[1].innerText).replace(/\s/g, '')).toBe('2TMSs70$12.30');
 
             store.loadData([{
-                student: 'Student 1',
+                TMS: 'TMS 1',
                 subject: 'Math',
                 mark: 77,
                 allowance: 30
             }, {
-                student: 'Student 2',
+                TMS: 'TMS 2',
                 subject: 'Science',
                 mark: 20,
                 allowance: 30.12
             }, {
-                student: 'Student 3',
+                TMS: 'TMS 3',
                 subject: 'Science',
                 mark: 30,
                 allowance: 12
             }, {
-                student: 'Student 4',
+                TMS: 'TMS 4',
                 subject: 'Science',
                 mark: 40,
                 allowance: 1
@@ -480,8 +480,8 @@ describe('Ext.grid.feature.GroupingSummary', function () {
 
             rows = grid.view.el.query(groupingSummary.summaryRowSelector);
 
-            expect((rows[0].textContent || rows[0].innerText).replace(/\s/g, '')).toBe('1student77$30.00');
-            expect((rows[1].textContent || rows[1].innerText).replace(/\s/g, '')).toBe('3students30$43.12');
+            expect((rows[0].textContent || rows[0].innerText).replace(/\s/g, '')).toBe('1TMS77$30.00');
+            expect((rows[1].textContent || rows[1].innerText).replace(/\s/g, '')).toBe('3TMSs30$43.12');
         });
     });
 
@@ -508,7 +508,7 @@ describe('Ext.grid.feature.GroupingSummary', function () {
                         rootProperty: 'data'
                     }
                 },
-                grouper: {property: 'student'},
+                grouper: {property: 'TMS'},
                 data: null
             });
 
@@ -519,11 +519,11 @@ describe('Ext.grid.feature.GroupingSummary', function () {
                 summaryData: [{
                     allowance: 67,
                     mark: 42,
-                    student: 'Student 1'
+                    TMS: 'TMS 1'
                 }, {
                     allowance: 100,
                     mark: 99,
-                    student: 'Student 2'
+                    TMS: 'TMS 2'
                 }],
                 total: 4
             });
@@ -536,22 +536,22 @@ describe('Ext.grid.feature.GroupingSummary', function () {
         it('should correctly render the data in the view', function () {
             var rows = grid.view.body.query('.x-grid-row-summary');
 
-            expect((rows[0].textContent || rows[0].innerText).replace(/\s/g, '')).toBe('Student1students42$67.00');
-            expect((rows[1].textContent || rows[1].innerText).replace(/\s/g, '')).toBe('Student2students99$100.00');
+            expect((rows[0].textContent || rows[0].innerText).replace(/\s/g, '')).toBe('TMS1TMSs42$67.00');
+            expect((rows[1].textContent || rows[1].innerText).replace(/\s/g, '')).toBe('TMS2TMSs99$100.00');
         });
 
         it('should create a summaryData object for each group', function () {
             var summaryData = groupingSummary.summaryData;
 
-            expect(summaryData['Student 1']).toBeDefined();
-            expect(summaryData['Student 2']).toBeDefined();
+            expect(summaryData['TMS 1']).toBeDefined();
+            expect(summaryData['TMS 2']).toBeDefined();
         });
 
         it('should create a metaGroupCache entry for each group', function () {
             var metaGroupCache = groupingSummary.getCache();
 
-            expect(metaGroupCache['Student 1']).toBeDefined();
-            expect(metaGroupCache['Student 2']).toBeDefined();
+            expect(metaGroupCache['TMS 1']).toBeDefined();
+            expect(metaGroupCache['TMS 2']).toBeDefined();
         });
     });
 });

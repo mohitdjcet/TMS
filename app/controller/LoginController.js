@@ -21,7 +21,7 @@ Ext.define('TMS.controller.LoginController', {
 			},
 		     success: function(response, opts) {
 		         var obj = Ext.decode(response.responseText);
-		         console.dir(obj);
+		         console.log(obj);
                  if(obj.length === 1){
                      Ext.History.add('#register');
                  }else{

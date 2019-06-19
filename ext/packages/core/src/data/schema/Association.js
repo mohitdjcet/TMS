@@ -50,8 +50,8 @@
  * ## Many To Many
  *
  * An entity (`A`) may have a have a relationship with many (`B`) entities. That (`B`) entity may also
- * have a relationship with many `A` entities. For example a single `Student` can have many `Subject` entities and
- * a single `Subject` can have many `Student` entities.
+ * have a relationship with many `A` entities. For example a single `TMS` can have many `Subject` entities and
+ * a single `Subject` can have many `TMS` entities.
  *
  * This can be defined using `Ext.data.schema.ManyToMany`. Many To Many relationships are readonly unless used with
  * a `Ext.data.Session`.

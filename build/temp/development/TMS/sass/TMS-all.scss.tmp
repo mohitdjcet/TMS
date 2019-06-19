@@ -908,12 +908,11 @@ $include-ext-window-messagebox: dynamic(true);;
 $include-ext-window-toast: dynamic(true);;
 $include-ext-window-window: dynamic(true);;
 $include-tms-controller-logincontroller: dynamic(true);;
+$include-tms-controller-registercontroller: dynamic(true);;
 $include-tms-view-home: dynamic(true);;
 $include-tms-view-login: dynamic(true);;
 $include-tms-view-register: dynamic(true);;
 $include-tms-view-viewport: dynamic(true);;
-$include-tms-view-main-maincontroller: dynamic(true);;
-$include-tms-view-main-mainmodel: dynamic(true);;
 $output-paths: ("path": "../../classic/resources", "shared": "../../resources");
 
 /* ======================== ETC ======================== */

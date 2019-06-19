@@ -3,7 +3,7 @@ Ext.application({
 
     // models: ['TMS.model.Customers'],
     // stores: ['TMS.store.Customers'],
-    controllers: ['LoginController'],
+    controllers: ['LoginController','RegisterController'],
     views: ['Login','Viewport','Register','Home'],
 
     launch: function () {

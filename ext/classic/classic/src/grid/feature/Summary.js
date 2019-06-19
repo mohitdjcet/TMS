@@ -33,7 +33,7 @@
  *     @example
  *     Ext.define('TestResult', {
  *         extend: 'Ext.data.Model',
- *         fields: ['student', {
+ *         fields: ['TMS', {
  *             name: 'mark',
  *             type: 'int'
  *         }]
@@ -51,25 +51,25 @@
  *         store: {
  *             model: 'TestResult',
  *             data: [{
- *                 student: 'Student 1',
+ *                 TMS: 'TMS 1',
  *                 mark: 84
  *             },{
- *                 student: 'Student 2',
+ *                 TMS: 'TMS 2',
  *                 mark: 72
  *             },{
- *                 student: 'Student 3',
+ *                 TMS: 'TMS 3',
  *                 mark: 96
  *             },{
- *                 student: 'Student 4',
+ *                 TMS: 'TMS 4',
  *                 mark: 68
  *             }]
  *         },
  *         columns: [{
- *             dataIndex: 'student',
+ *             dataIndex: 'TMS',
  *             text: 'Name',
  *             summaryType: 'count',
  *             summaryRenderer: function(value, summaryData, dataIndex) {
- *                 return Ext.String.format('{0} student{1}', value, value !== 1 ? 's' : '');
+ *                 return Ext.String.format('{0} TMS{1}', value, value !== 1 ? 's' : '');
  *             }
  *         }, {
  *             dataIndex: 'mark',

@@ -222,18 +222,18 @@ Ext.define('Ext.grid.column.Widget', {
      * 
      *     Ext.create({
      *         xtype: 'grid',
-     *         title: 'Student progress report',
+     *         title: 'TMS progress report',
      *         width: 250,
      *         renderTo: Ext.getBody(),
      *         disableSelection: true,
      *         store: {
-     *             fields: ['name', 'isHonorStudent'],
+     *             fields: ['name', 'isHonorTMS'],
      *             data: [{
      *                 name: 'Finn',
-     *                 isHonorStudent: true
+     *                 isHonorTMS: true
      *             }, {
      *                 name: 'Jake',
-     *                 isHonorStudent: false
+     *                 isHonorTMS: false
      *             }]
      *         },
      *         columns: [{
@@ -243,7 +243,7 @@ Ext.define('Ext.grid.column.Widget', {
      *         }, {
      *             xtype: 'widgetcolumn',
      *             text: 'Honor Roll',
-     *             dataIndex: 'isHonorStudent',
+     *             dataIndex: 'isHonorTMS',
      *             width: 150,
      *             widget: {
      *                 xtype: 'button',
@@ -255,7 +255,7 @@ Ext.define('Ext.grid.column.Widget', {
      *             // on the widget column
      *             onWidgetAttach: function(col, widget, rec) {
      *                 widget.setText('Print Certificate');
-     *                 widget.setDisabled(!rec.get('isHonorStudent'));
+     *                 widget.setDisabled(!rec.get('isHonorTMS'));
      *             }
      *         }]
      *     });

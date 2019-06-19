@@ -19,19 +19,19 @@ describe('Ext.grid.feature.Summary', function () {
 
             function createGrid(gridCfg, summaryCfg, storeCfg, configuredData) {
                 data = [{
-                    student: 'Student 1',
+                    TMS: 'TMS 1',
                     subject: 'Math',
                     mark: 84
                 },{
-                    student: 'Student 1',
+                    TMS: 'TMS 1',
                     subject: 'Science',
                     mark: 72
                 },{
-                    student: 'Student 2',
+                    TMS: 'TMS 2',
                     subject: 'Math',
                     mark: 96
                 },{
-                    student: 'Student 2',
+                    TMS: 'TMS 2',
                     subject: 'Science',
                     mark: 68
                 }];
@@ -39,7 +39,7 @@ describe('Ext.grid.feature.Summary', function () {
                 var storeData = configuredData || data;
 
                 store = new Ext.data.Store(Ext.apply({
-                    fields: ['student', 'subject', {
+                    fields: ['TMS', 'subject', {
                         name: 'mark',
                         type: 'int'
                     }],
@@ -61,8 +61,8 @@ describe('Ext.grid.feature.Summary', function () {
                 grid = new Ext.grid.Panel(Ext.apply({
                     store: store,
                     columns: [{
-                        itemId: 'studentColumn',
-                        dataIndex: 'student',
+                        itemId: 'TMSColumn',
+                        dataIndex: 'TMS',
                         locked: withLocking,
                         flex: withLocking ? undefined : 1,
                         width: withLocking ? 500 : undefined,
@@ -70,7 +70,7 @@ describe('Ext.grid.feature.Summary', function () {
                         summaryType: 'count',
                         summaryRenderer: function (value, summaryData, field) {
                             params = arguments;
-                            return Ext.String.format('{0} student{1}', value, value !== 1 ? 's' : '');
+                            return Ext.String.format('{0} TMS{1}', value, value !== 1 ? 's' : '');
                         }
                     }, {
                         itemId: 'markColumn',
@@ -203,7 +203,7 @@ describe('Ext.grid.feature.Summary', function () {
                     hideMarkColumn = false;
 
                     // Only one column, so only that column's summary shown
-                    expect(getSummaryContent()).toBe('4students');
+                    expect(getSummaryContent()).toBe('4TMSs');
 
                     // When the Mark column is shown, that column's summary should be shown
                     grid.getColumnManager().getColumns()[1].show();
@@ -211,7 +211,7 @@ describe('Ext.grid.feature.Summary', function () {
                     // Syncing of column arrangement is deferred to batch multiple
                     // changes into one syncLockedWidth call, so wait for the correct state.
                     waitsFor(function() {
-                        return getSummaryContent() === '4students80';
+                        return getSummaryContent() === '4TMSs80';
                     });
                 });
                 
@@ -226,20 +226,20 @@ describe('Ext.grid.feature.Summary', function () {
                     expect(params.length).toBe(4);
                     expect(params[0]).toBe(4);
                     expect(params[1]).toEqual(withLocking ? {
-                        studentColumn: 4
+                        TMSColumn: 4
                     } : {
-                        studentColumn: 4,
+                        TMSColumn: 4,
                         markColumn: 80
                     });
-                    expect(params[2]).toBe('student');
+                    expect(params[2]).toBe('TMS');
                     expect(params[3].tdCls).toBeDefined();
                 });
 
                 it('should not blow out the table cell if the value returned from the renderer is bigger than the allotted width', function () {
                     createGrid({
                         columns: [{
-                            itemId: 'studentColumn',
-                            dataIndex: 'student',
+                            itemId: 'TMSColumn',
+                            dataIndex: 'TMS',
                             text: 'Name',
                             locked: withLocking,
                             width: 200,
@@ -258,10 +258,10 @@ describe('Ext.grid.feature.Summary', function () {
                     var rec = store.getAt(0);
                     // For the comparison, just grab the first table cell in the view and compare it to the first table cell within the feature.
                     if (withLocking) {
-                        expect(getSummary(lockedView).firstChild.offsetWidth).toBe(lockedView.getCell(rec, grid.down('#studentColumn')).dom.offsetWidth);
+                        expect(getSummary(lockedView).firstChild.offsetWidth).toBe(lockedView.getCell(rec, grid.down('#TMSColumn')).dom.offsetWidth);
                         expect(getSummary(normalView).firstChild.offsetWidth).toBe(normalView.getCell(rec, grid.down('#markColumn')).dom.offsetWidth);
                     } else {
-                        expect(getSummary().firstChild.offsetWidth).toBe(view.getCell(rec, grid.down('#studentColumn')).dom.offsetWidth);
+                        expect(getSummary().firstChild.offsetWidth).toBe(view.getCell(rec, grid.down('#TMSColumn')).dom.offsetWidth);
                         expect(getSummary().lastChild.offsetWidth).toBe(view.getCell(rec, grid.down('#markColumn')).dom.offsetWidth);
                     }
                 });
@@ -576,7 +576,7 @@ describe('Ext.grid.feature.Summary', function () {
                                 rootProperty: 'data'
                             }
                         },
-                        grouper: {property: 'student'},
+                        grouper: {property: 'TMS'},
                         data: null
                     });
 
@@ -587,7 +587,7 @@ describe('Ext.grid.feature.Summary', function () {
                         data: data,
                         summaryData: {
                             mark: 42,
-                            student: 15
+                            TMS: 15
                         },
                         total: 4
                     });
@@ -598,7 +598,7 @@ describe('Ext.grid.feature.Summary', function () {
                 });
 
                 it('should correctly render the data in the view', function () {
-                    expect(getSummaryContent()).toBe('15students42');
+                    expect(getSummaryContent()).toBe('15TMSs42');
                 });
 
                 it('should create a summaryRecord', function () {
@@ -606,7 +606,7 @@ describe('Ext.grid.feature.Summary', function () {
 
                     expect(record.isModel).toBe(true);
                     expect(record.get('mark')).toBe(42);
-                    expect(record.get('student')).toBe(15);
+                    expect(record.get('TMS')).toBe(15);
                 });
             });
 
@@ -693,7 +693,7 @@ describe('Ext.grid.feature.Summary', function () {
                             it("should not cause an exception on add", function() {
                                 expect(function() {
                                     store.add({
-                                        student: 'Student 5',
+                                        TMS: 'TMS 5',
                                         subject: 'Math',
                                         mark: 10
                                     });
@@ -715,10 +715,10 @@ describe('Ext.grid.feature.Summary', function () {
                             it("should not cause an exception on load of new data", function() {
                                 expect(function() {
                                     store.loadData([{
-                                        student: 'Foo',
+                                        TMS: 'Foo',
                                         mark: 75
                                     }, {
-                                        student: 'Bar',
+                                        TMS: 'Bar',
                                         mark: 25
                                     }]);
                                 }).not.toThrow();
@@ -740,41 +740,41 @@ describe('Ext.grid.feature.Summary', function () {
 
                             it("should react to an update", function() {
                                 store.getAt(0).set('mark', 100);
-                                expectContent(withDocking, '4students84');
+                                expectContent(withDocking, '4TMSs84');
                                 expectPosition(withDocking, 3);
                             });
 
                             it("should react to an add", function() {
                                 store.add({
-                                    student: 'Student 5',
+                                    TMS: 'TMS 5',
                                     subject: 'Math',
                                     mark: 10
                                 });
-                                expectContent(withDocking, '5students66');
+                                expectContent(withDocking, '5TMSs66');
                                 expectPosition(withDocking, 4);
                             });
 
                             it("should react to a remove", function() {
                                 store.removeAt(3);
-                                expectContent(withDocking, '3students84');
+                                expectContent(withDocking, '3TMSs84');
                                 expectPosition(withDocking, 2);
                             });
 
                             it("should react to a removeAll", function() {
                                 store.removeAll();
-                                expectContent(withDocking, '0students0');
+                                expectContent(withDocking, '0TMSs0');
                                 expectPosition(-1);
                             });
 
                             it("should react to a load of new data", function() {
                                 store.loadData([{
-                                    student: 'Foo',
+                                    TMS: 'Foo',
                                     mark: 75
                                 }, {
-                                    student: 'Bar',
+                                    TMS: 'Bar',
                                     mark: 25
                                 }]);
-                                expectContent(withDocking, '2students50');
+                                expectContent(withDocking, '2TMSs50');
                                 expectPosition(withDocking, 1);
                             });
                         });
@@ -792,15 +792,15 @@ describe('Ext.grid.feature.Summary', function () {
                                 });
                                 var oldStore = store;
                                 store = new Ext.data.Store({
-                                    fields: ['student', 'subject', {
+                                    fields: ['TMS', 'subject', {
                                         name: 'mark',
                                         type: 'int'
                                     }],
                                     data: [{
-                                        student: 'Student 1',
+                                        TMS: 'TMS 1',
                                         mark: 30
                                     }, {
-                                        student: 'Student 2',
+                                        TMS: 'TMS 2',
                                         mark: 50
                                     }],
                                     autoDestroy: true
@@ -811,40 +811,40 @@ describe('Ext.grid.feature.Summary', function () {
 
                             it("should react to an update", function() {
                                 store.getAt(0).set('mark', 100);
-                                expectContent(withDocking, '2students75');
+                                expectContent(withDocking, '2TMSs75');
                                 expectPosition(withDocking, 1);
                             });
 
                             it("should react to an add", function() {
                                 store.add({
-                                    student: 'Student 3',
+                                    TMS: 'TMS 3',
                                     mark: 10
                                 });
-                                expectContent(withDocking, '3students30');
+                                expectContent(withDocking, '3TMSs30');
                                 expectPosition(withDocking, 2);
                             });
 
                             it("should react to a remove", function() {
                                 store.removeAt(0);
-                                expectContent(withDocking, '1student50');
+                                expectContent(withDocking, '1TMS50');
                                 expectPosition(withDocking, 0);
                             });
 
                             it("should react to a removeAll", function() {
                                 store.removeAll();
-                                expectContent(withDocking, '0students0');
+                                expectContent(withDocking, '0TMSs0');
                                 expectPosition(withDocking, -1);
                             });
 
                             it("should react to a load of new data", function() {
                                 store.loadData([{
-                                    student: 'Foo',
+                                    TMS: 'Foo',
                                     mark: 75
                                 }, {
-                                    student: 'Bar',
+                                    TMS: 'Bar',
                                     mark: 25
                                 }]);
-                                expectContent(withDocking, '2students50');
+                                expectContent(withDocking, '2TMSs50');
                                 expectPosition(withDocking, 1);
                             });
                         });
@@ -862,7 +862,7 @@ describe('Ext.grid.feature.Summary', function () {
                     for (i = 1; i <= 1000; ++i) {
                         data.push({
                             id: i,
-                            student: 'Student ' + i,
+                            TMS: 'TMS ' + i,
                             subject: (i % 2 === 0) ? 'Math' : 'Science',
                             mark: i % 100
                         });
@@ -911,7 +911,7 @@ describe('Ext.grid.feature.Summary', function () {
                         }, null, {
                             groupField: 'subject'
                         });
-                        expect(getSummaryContent()).toBe('4students80');
+                        expect(getSummaryContent()).toBe('4TMSs80');
                     });
                 });
             });

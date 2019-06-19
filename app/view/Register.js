@@ -13,27 +13,25 @@ Ext.define('TMS.view.Register', {
 
     items: [
         {
-            id: 'FirstName',
             allowBlank: false,
             fieldLabel: 'First Name',
-            name: 'First Name',
-            emptyText: 'user id'
+            name: 'name',
+            emptyText: 'First Name'
         },
         {
-            id: 'LastName',
             allowBlank: false,
             fieldLabel: 'Last Name',
-            name: 'pass',
+            name: 'username',
             emptyText: 'Last Name',
             inputType: 'name'
         },
         {
-            id: 'Email-ID',
+
             allowBlank: false,
-            fieldLabel: 'Email-ID',
-            name: 'pass',
-            emptyText: 'Email-ID',
-            inputType: 'name'
+            fieldLabel: 'Password',
+            name: 'password',
+            emptyText: 'Password',
+            inputType: 'Password'
         },
         {
             xtype: 'checkbox',
@@ -45,10 +43,11 @@ Ext.define('TMS.view.Register', {
     buttons: [
         {
             text: 'Register',
+            itemId: 'registerBtn',
         },
         {
             text: 'Login',
-            handler: ()=> {
+            handler: () => {
                 Ext.History.add('#login')
             }
         }

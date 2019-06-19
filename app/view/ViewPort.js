@@ -3,6 +3,7 @@ Ext.define('TMS.view.Viewport', {
 
     id: 'viewport',
     layout: 'border',
+    region: 'center',
 
     items: [
         {
@@ -33,7 +34,7 @@ Ext.define('TMS.view.Viewport', {
                 }
             }, {
                 xtype: 'button',
-                text: 'Create an account',
+                text: 'Create Account',
                 handler: () => {
                     Ext.History.add('#register');
                 }
